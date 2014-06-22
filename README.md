@@ -21,7 +21,7 @@ The simplicity of the plugin relies on the data files being formatted to the plu
 
 The data file needs to be uploaded into Wordpress's media library. Once uploaded, just make sure to enter the same filename into the *data* field in the shortcode. The plugin does the rest.
 
-## To Do
+### To Do
 
 1. Multi-series data for all three chart types.
 
@@ -33,6 +33,6 @@ The data file needs to be uploaded into Wordpress's media library. Once uploaded
 
 5. Configuration pane for plugin allowing to set defaults.
 
-## Will Never Do
+### Will Never Do
 
 1. Pie charts.
