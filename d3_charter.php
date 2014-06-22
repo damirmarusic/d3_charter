@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple D3 Chart Shortcodes
-Plugin URI: https://github.com/damirmarusic/d3_charter
+Plugin URI: https://github.com/damirmarusic/d3_charter/
 Description: Allows easy embedding of simple D3.js charts using shortcodes.
 Version: 1.0
 Author: Damir Marusic
