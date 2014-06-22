@@ -1,4 +1,4 @@
-# D3 Charter - Simple D3.js-powered Charts in Wordpress
+## D3 Charter - Simple D3.js-powered Charts in Wordpress
 
 This Wordpress plugin allows easy embedding of simple D3.js charts using shortcodes. Copy the folder into your plugins directory and activate it.
 
