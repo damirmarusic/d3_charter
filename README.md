@@ -4,7 +4,10 @@ This Wordpress plugin allows easy embedding of simple D3.js charts using shortco
 
 The shortcode interface in Wordpress:
 
-    [d3chart title="Chart Title" subtitle="Chart Subtitle" type="bar|barHoriz|line" data="data-filename.csv"]
+    [d3chart title="Chart Title" 
+            subtitle="Chart Subtitle"
+            type="bar|barHoriz|line" 
+            data="data-filename.csv"]
 
 The simplicity of the plugin relies on the data files being formatted to the plugin's specifications:
 
