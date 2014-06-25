@@ -40,7 +40,7 @@ class D3_Charter_Plugin {
 			$html = '<link rel="stylesheet" type="text/css" href="'.$plugindir.'css/style.css">';
 
 			// Create Divs and Include D3 script from Bostock.
-			$divname = preg_replace("/[^\w]+/", "-", strtolower($params['title'])); // (hopefully) unique name for div			
+			$divname = uniqid('d3chart-'); // unique name for div			
 			$html .= '<div class="d3chart" id="'.$divname.'"></div>';
 			$html .= '<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>';
 
@@ -60,7 +60,7 @@ class D3_Charter_Plugin {
 			}
 
 			// Add the code calling the chart drawing Javascript
-			$chart_var = preg_replace("/[^\w]+/", "", strtolower($params['title'])); // (hopefully) unique name for js vars
+			$chart_var = uniqid('d3var_'); // unique name for js vars
 			$uploaddir = wp_upload_dir();
 			$datafile = $uploaddir['url'].'/'.$params['data'];
 			$html .= <<<EOT

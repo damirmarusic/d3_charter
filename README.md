@@ -17,7 +17,7 @@ The simplicity of the plugin relies on the data files being formatted to the plu
 
 3. The first row must have column headings and those headings must be x and y, in that order. See the **data** directory of this repository for examples. Obviously, these correspond to the x and y axes. (Note that for horizontal bar charts, x and y are swapped. Again, look at the examples in the **data** folder.
 
-4. If you are doing a line chart, the x column should be a time series. For now, the formatting of the data should be in the mm/dd/yyyy format. (Next updates will allow you to customize the date format.)
+4. If you are doing a line chart, the x column should be a time series. For now, the formatting of the data should be in the mm/dd/yy format. (Next updates will allow you to customize the date format.)
 
 The data file needs to be uploaded into Wordpress's media library. Once uploaded, just make sure to enter the same filename into the *data* field in the shortcode. The plugin does the rest.
 
