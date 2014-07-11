@@ -6,7 +6,7 @@ Description: Allows easy embedding of simple D3.js charts using shortcodes.
 Version: 1.0
 Author: Damir Marusic
 Author URI: https://github.com/damirmarusic/
-License: GPL2
+License: GPL2 - Booyeah
 */
 
 class D3_Charter_Plugin {
@@ -60,8 +60,9 @@ class D3_Charter_Plugin {
 			}
 
 			// Add the code calling the chart drawing Javascript
-			$chart_var = uniqid('d3var_'); // unique name for js vars
-			$uploaddir = wp_upload_dir();
+			$chart_var = uniqid('d3chart_'); // unique name for js vars
+			$post_date = get_the_date('Y/m');
+			$uploaddir = wp_upload_dir($post_date);
 			$datafile = $uploaddir['url'].'/'.$params['data'];
 			$html .= <<<EOT
 			<script type="text/javascript">
