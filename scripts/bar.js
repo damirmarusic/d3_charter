@@ -167,11 +167,11 @@ function chart() {
 		return myBarChart;
 	};
 
-	myBarChart.margin = function(_) {
+	myBarChart.marginLeft = function(_) {
 		if (!arguments.length) {
-			return margin;
+			return margin.left;
 		}
-		margin = _;
+		margin.left = _;
 		return myBarChart;
 	};
 

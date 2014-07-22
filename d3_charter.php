@@ -15,7 +15,8 @@ class D3_Charter_Plugin {
 		'title' => 'Title Placeholder',
 		'subtitle' => 'Subtitle Placeholder',
 		'type' => 'bar',
-		'data' => ''
+		'data' => '',
+		'margin_left' => '40'
 	);
 
 	function enable() {
@@ -68,7 +69,8 @@ class D3_Charter_Plugin {
 			<script type="text/javascript">
 				var $chart_var = chart()
 					.title('$params[title]')
-					.subtitle('$params[subtitle]');	
+					.subtitle('$params[subtitle]')
+					.marginLeft(+$params[margin_left]);	
 				d3.csv('$datafile', function(error, data){
 					d3.select('#$divname')
 						.datum(data)

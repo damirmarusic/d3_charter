@@ -181,11 +181,11 @@ function chart() {
 		return myLineChart;
 	};
 
-	myLineChart.margin = function(_) {
+	myLineChart.marginLeft = function(_) {
 		if (!arguments.length) {
-			return margin;
+			return margin.left;
 		}
-		margin = _;
+		margin.left = _;
 		return myLineChart;
 	};
 
