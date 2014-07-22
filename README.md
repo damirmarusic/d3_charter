@@ -6,7 +6,8 @@ The shortcode interface in Wordpress:
 
     [d3chart title="Chart Title" 
             subtitle="Chart Subtitle"
-            type="bar|barHoriz|line" 
+            type="bar|barHoriz|line"
+            margin_left="40"
             data="data-filename.csv"]
 
 The simplicity of the plugin relies on the data files being formatted to the plugin's specifications:
