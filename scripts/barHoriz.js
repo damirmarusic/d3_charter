@@ -5,8 +5,8 @@ var hyphenateClass = function (str) {
 
 function chart() {
 	var margin = {top: 50, right: 40, bottom: 20, left: 40},
-		width = 450 - margin.left - margin.right, // defaults
-		height = 400 - margin.top - margin.bottom;
+		width = 450,
+		height = 400;
 	var yScale = d3.scale.ordinal();
 	var xScale = d3.scale.linear();
 	var yAxis = d3.svg.axis()
@@ -21,23 +21,28 @@ function chart() {
 
 	function myBarChart(selection) {
 
+		var calcWidth = width - margin.left - margin.right,
+			calcHeight = height - margin.top - margin.bottom;
+
+		console.log(calcWidth);
+
 		var chart = selection.append('svg')
 			.attr('class', 'cls-' + selection.attr('id'))
-			.attr('width', width + margin.left + margin.right)
-			.attr('height', height + margin.top + margin.bottom);
+			.attr('width', calcWidth + margin.left + margin.right)
+			.attr('height', calcHeight + margin.top + margin.bottom);
 
 		var titlearea = chart.append('text')
 			.attr('y', '1.2em');
 		
 		titlearea.append('tspan')
 			.attr('class', 'd3chart-title')
-			.attr('x', (width + margin.left + margin.right)/2)
+			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(title);
 
 		titlearea.append('tspan')
 			.attr('class', 'd3chart-subtitle')
 			.attr('dy', '1.2em')
-			.attr('x', (width + margin.left + margin.right)/2)
+			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(subtitle);
 		
 		chart = chart.append('g')
@@ -46,11 +51,11 @@ function chart() {
 		selection.each(function(data) {
 
 			yScale
-				.rangeRoundBands([0, height], 0.1)
+				.rangeRoundBands([0, calcHeight], 0.1)
 				.domain(data.map(function(d) { return d.y; } ));
 
 			xScale
-				.range([0, width])
+				.range([0, calcWidth])
 				.domain([0, d3.max(data, function(d) { return +d.x; })]);
 
 			chart.append('g')

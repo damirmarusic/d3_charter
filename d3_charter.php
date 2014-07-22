@@ -16,7 +16,9 @@ class D3_Charter_Plugin {
 		'subtitle' => 'Subtitle Placeholder',
 		'type' => 'bar',
 		'data' => '',
-		'margin_left' => '40'
+		'margin_left' => '40',
+		'chart_width' => '450',
+		'chart_height' => '400'
 	);
 
 	function enable() {
@@ -70,7 +72,9 @@ class D3_Charter_Plugin {
 				var $chart_var = chart()
 					.title('$params[title]')
 					.subtitle('$params[subtitle]')
-					.marginLeft(+$params[margin_left]);	
+					.marginLeft(+$params[margin_left])
+					.width(+$params[chart_width])
+					.height(+$params[chart_height]);	
 				d3.csv('$datafile', function(error, data){
 					d3.select('#$divname')
 						.datum(data)

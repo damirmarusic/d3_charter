@@ -2,11 +2,14 @@
 
 This Wordpress plugin allows easy embedding of simple D3.js charts using shortcodes. Copy the folder into your plugins directory and activate it.
 
-The shortcode interface in Wordpress:
+The shortcode interface in WordPress:
 
     [d3chart title="Chart Title" 
             subtitle="Chart Subtitle"
             type="bar|barHoriz|line" 
+            margin_left="40"
+            chart_width="450"
+            chart_height="400"
             data="data-filename.csv"]
 
 The simplicity of the plugin relies on the data files being formatted to the plugin's specifications:
@@ -27,7 +30,7 @@ The data file needs to be uploaded into Wordpress's media library. Once uploaded
 
 2. Customize date formatting for time-series line charts through shortcode parameters.
 
-3. Customize chart sizes through shortcode parameters.
+<strike>3. Customize chart sizes through shortcode parameters.</strike>
 
 4. Customize colors through shortcode parameters.
 

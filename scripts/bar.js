@@ -5,8 +5,8 @@ var hyphenateClass = function (str) {
 
 function chart() {
 	var margin = {top: 50, right: 40, bottom: 20, left: 40},
-		width = 450 - margin.left - margin.right, // defaults
-		height = 400 - margin.top - margin.bottom;
+		width = 450,
+		height = 400;
 	var xScale = d3.scale.ordinal();
 	var yScale = d3.scale.linear();
 	var xAxis = d3.svg.axis()
@@ -24,23 +24,26 @@ function chart() {
 
 	function myBarChart(selection) {
 
+		var calcWidth = width - margin.left - margin.right, 
+			calcHeight = height - margin.top - margin.bottom;
+
 		var chart = selection.append('svg')
 			.attr('class', 'cls-' + selection.attr('id'))
-			.attr('width', width + margin.left + margin.right)
-			.attr('height', height + margin.top + margin.bottom);
+			.attr('width', calcWidth + margin.left + margin.right)
+			.attr('height', calcHeight + margin.top + margin.bottom);
 
 		var titlearea = chart.append('text')
 			.attr('y', '1.2em');
 		
 		titlearea.append('tspan')
 			.attr('class', 'd3chart-title')
-			.attr('x', (width + margin.left + margin.right)/2)
+			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(title);
 
 		titlearea.append('tspan')
 			.attr('class', 'd3chart-subtitle')
 			.attr('dy', '1.2em')
-			.attr('x', (width + margin.left + margin.right)/2)
+			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(subtitle);
 		
 		chart = chart.append('g')
@@ -49,18 +52,18 @@ function chart() {
 		selection.each(function(data) {
 
 			xScale
-				.rangeRoundBands([0, width], 0.1)
+				.rangeRoundBands([0, calcWidth], 0.1)
 				.domain(data.map(function(d) { return d.x; } ));
 
 			yScale
-				.range([height, 0])
+				.range([calcHeight, 0])
 				.domain([0, d3.max(data, function(d) { return +d.y; })]);
 
 			yAxis.tickFormat(yFormatter);
 
 			chart.append('g')
 				.attr('class', 'x axis')
-				.attr('transform', 'translate(0,' + height + ')')
+				.attr('transform', 'translate(0,' + calcHeight + ')')
 				.call(xAxis);
 
 			var xAxisNodes = d3.select('#' + selection.attr('id') +' .x.axis');
@@ -102,7 +105,7 @@ function chart() {
 				.attr('class', 'bar')
 				.attr('x', function(d) { return xScale(d.x); })
 				.attr('y', function(d) { return yScale(+d.y); })
-				.attr('height', function(d) { return height - yScale(+d.y); })
+				.attr('height', function(d) { return calcHeight - yScale(+d.y); })
 				.attr('width', xScale.rangeBand())
 				.attr('fill', barFill)
 				.on('mouseover', function(d){
