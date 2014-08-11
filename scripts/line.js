@@ -24,17 +24,19 @@ function chart() {
 		keyOffsetX,
 		keyOffsetY;
 	var title = 'Title Placeholder',
-		subtitle = 'Subtitle Placeholder';
+		subtitle = '';
 	var line = d3.svg.line()
 		.defined(function(d) { return !isNaN(d.y); }) // Allow for discontinuous data
 		.x(function(d) { return xScale(d.x); })
-		.y(function(d) { console.log(d.y); return yScale(d.y); });
+		.y(function(d) { return yScale(d.y); });
 	var xFormatter = d3.time.format('%-m/%-d/%y').parse;
 	var yFormatter = d3.format(',');
 	var color = d3.scale.ordinal()
           .range(['#5d85b8','#D0021B','#D8D118','#616B31','#96DAD8']);
 
 	function myLineChart(selection) {
+
+		margin.top = subtitle === '' ? 35 : 50;
 
 		var calcWidth = width - margin.left - margin.right,
 			calcHeight = height - margin.top - margin.bottom;
@@ -95,11 +97,11 @@ function chart() {
 		switch (keyPosition) {
 			case 'bottom-right':
 				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight;
+				keyOffsetY = calcHeight - (calcHeight/16);
 				break;
 			case 'bottom-left':
 				keyOffsetX = (calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight;
+				keyOffsetY = calcHeight - (calcHeight/16);
 				break;
 			case 'top-right':
 				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
@@ -111,17 +113,15 @@ function chart() {
 				break;
 			default:
 				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight;
+				keyOffsetY = calcHeight - (calcHeight/16);
 				break;
 		}
-
-		console.log(keyPosition);
 
 		var key = svg.append('g')
 			.attr('class', 'key');
 
 		var chartkey = key.append('text')
-			.attr('y', keyOffsetY)
+			.attr('y', keyOffsetY - 15)
 			.attr('class', 'd3chart-key');
 
 		dataKeys.forEach(function(series, i){
@@ -135,7 +135,7 @@ function chart() {
 			chartkey.append('tspan')
 				.attr('alignment-baseline', 'hanging')
 				.attr('x', keyOffsetX)
-				.attr('dy', i * 15)
+				.attr('dy', 15)
 				.attr('class', series + '-key key')
 				.text(series);
 		});

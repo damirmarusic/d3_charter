@@ -12,8 +12,8 @@ License: GPL2 - Booyeah
 class D3_Charter_Plugin {
 
 	private $defaults = array(
-		'title' => 'Title Placeholder',
-		'subtitle' => 'Subtitle Placeholder',
+		'title' => '',
+		'subtitle' => '',
 		'keyposition' => 'bottom-right',
 		'dateformatter' => '%-m/%-d/%y',
 		'type' => 'bar',
