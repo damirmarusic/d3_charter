@@ -27,6 +27,8 @@ function chart() {
 		var calcWidth = width - margin.left - margin.right, 
 			calcHeight = height - margin.top - margin.bottom;
 
+		var dataKeys;
+
 		var chart = selection.append('svg')
 			.attr('class', 'cls-' + selection.attr('id'))
 			.attr('width', calcWidth + margin.left + margin.right)
@@ -51,13 +53,15 @@ function chart() {
 		
 		selection.each(function(data) {
 
+			dataKeys = d3.keys(data[0]);
+
 			xScale
 				.rangeRoundBands([0, calcWidth], 0.1)
-				.domain(data.map(function(d) { return d.x; } ));
+				.domain(data.map(function(d) { return d[dataKeys[0]]; } ));
 
 			yScale
 				.range([calcHeight, 0])
-				.domain([0, d3.max(data, function(d) { return +d.y; })]);
+				.domain([0, d3.max(data, function(d) { return +d[dataKeys[1]]; })]);
 
 			yAxis.tickFormat(yFormatter);
 
@@ -103,9 +107,9 @@ function chart() {
 				.data(data)
 				.enter().append('rect')
 				.attr('class', 'bar')
-				.attr('x', function(d) { return xScale(d.x); })
-				.attr('y', function(d) { return yScale(+d.y); })
-				.attr('height', function(d) { return calcHeight - yScale(+d.y); })
+				.attr('x', function(d) { return xScale(d[dataKeys[0]]); })
+				.attr('y', function(d) { return yScale(+d[dataKeys[1]]); })
+				.attr('height', function(d) { return calcHeight - yScale(+d[dataKeys[1]]); })
 				.attr('width', xScale.rangeBand())
 				.attr('fill', barFill)
 				.on('mouseover', function(d){
@@ -120,7 +124,7 @@ function chart() {
 						.attr('font-family', 'Lato')
 						.attr('font-size', '10px')
 						.attr('fill', 'black')
-						.text(yFormatter(+d.y));
+						.text(yFormatter(+d[dataKeys[1]]));
 					d3.select(this)
 						.transition()
 						.duration(100)

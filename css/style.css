@@ -29,3 +29,9 @@
   fill: none;
   stroke: red;
 }
+
+.d3chart .line {
+  fill: none;
+  stroke: #5d85b8;
+  stroke-width: 2.5px;
+}

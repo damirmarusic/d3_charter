@@ -24,7 +24,7 @@ function chart() {
 		var calcWidth = width - margin.left - margin.right,
 			calcHeight = height - margin.top - margin.bottom;
 
-		console.log(calcWidth);
+		var dataKeys;
 
 		var chart = selection.append('svg')
 			.attr('class', 'cls-' + selection.attr('id'))
@@ -50,13 +50,15 @@ function chart() {
 		
 		selection.each(function(data) {
 
+			dataKeys = d3.keys(data[0]);
+
 			yScale
 				.rangeRoundBands([0, calcHeight], 0.1)
-				.domain(data.map(function(d) { return d.y; } ));
+				.domain(data.map(function(d) { return d[dataKeys[1]]; } ));
 
 			xScale
 				.range([0, calcWidth])
-				.domain([0, d3.max(data, function(d) { return +d.x; })]);
+				.domain([0, d3.max(data, function(d) { return +d[dataKeys[0]]; })]);
 
 			chart.append('g')
 				.attr('class', 'y axis')
@@ -81,9 +83,9 @@ function chart() {
 				.data(data)
 				.enter().append('rect')
 				.attr('class', 'bar')
-				.attr('y', function(d) { return yScale(d.y); })
+				.attr('y', function(d) { return yScale(d[dataKeys[1]]); })
 				.attr('x', function(d) { return 0; })
-				.attr('width', function(d) { return xScale(+d.x); })
+				.attr('width', function(d) { return xScale(+d[dataKeys[0]]); })
 				.attr('height', yScale.rangeBand())
 				.attr('fill', barFill)
 				.on('mouseover', function(d){
@@ -99,7 +101,7 @@ function chart() {
 						.attr('font-family', 'Lato')
 						.attr('font-size', '11px')
 						.attr('fill', 'black')
-						.text(xFormatter(+d.x));
+						.text(xFormatter(+d[dataKeys[0]]));
 					d3.select(this)
 						.transition()
 						.duration(100)
