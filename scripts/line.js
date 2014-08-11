@@ -4,9 +4,9 @@ var hyphenateClass = function (str) {
 };
 
 function chart() {
-	var margin = {top: 50, right: 40, bottom: 20, left: 40},
+	var margin = {top: 50, right: 40, bottom: 40, left: 40},
 		width = 450,
-		height = 400;
+		height = 480;
 	var dataKeys,
 		seriesData = [];
 	var xScale = d3.time.scale();
@@ -35,12 +35,12 @@ function chart() {
 		var calcWidth = width - margin.left - margin.right,
 			calcHeight = height - margin.top - margin.bottom;
 
-		var chart = selection.append('svg')
+		var svg = selection.append('svg')
 			.attr('class', 'cls-' + selection.attr('id'))
 			.attr('width', calcWidth + margin.left + margin.right)
 			.attr('height', calcHeight + margin.top + margin.bottom);
 
-		var titlearea = chart.append('text')
+		var titlearea = svg.append('text')
 			.attr('y', '1.2em');
 		
 		titlearea.append('tspan')
@@ -53,9 +53,6 @@ function chart() {
 			.attr('dy', '1.2em')
 			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(subtitle);
-		
-		chart = chart.append('g')
-			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 		
 		selection.each(function(data) {
 
@@ -75,8 +72,6 @@ function chart() {
 				};
 			});
 
-			console.log(seriesData);
-
 			data.map(function(d) { xScaleDomain.push(xFormatter(d.Date)); });
 			
 			xScale
@@ -93,9 +88,35 @@ function chart() {
 
 		});
 
+		var key = svg.append('g')
+			.attr('class', 'key');
+
+		var chartkey = key.append('text')
+			.attr('y', calcHeight)
+			.attr('class', 'd3chart-key');
+
+		dataKeys.forEach(function(series, i){
+			key.append('rect')
+				.attr('y', calcHeight + (i * 15))
+				.attr('x', (3*(calcWidth + margin.left + margin.right)/4) - 15)
+				.attr('height', 10)
+				.attr('width', 10)
+				.style('fill', color(series));
+
+			chartkey.append('tspan')
+				.attr('alignment-baseline', 'hanging')
+				.attr('x', 3*(calcWidth + margin.left + margin.right)/4)
+				.attr('dy', i * 15)
+				.attr('class', series + '-key key')
+				.text(series);
+		});
+
+		plot = svg.append('g')
+			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
 		yAxis.tickFormat(yFormatter);
 
-		chart.append('g')
+		plot.append('g')
 			.attr('class', 'x axis')
 			.attr('transform', 'translate(0,' + calcHeight + ')')
 			.call(xAxis);
@@ -114,7 +135,7 @@ function chart() {
 			'shape-rendering': 'crispEdges'
 		});
 		
-		chart.append('g')
+		plot.append('g')
 			.attr('class', 'y axis')
 			.call(yAxis);
 
@@ -132,7 +153,7 @@ function chart() {
 			'shape-rendering': 'crispEdges'
 		});
 
-		var series = chart.selectAll('.series')
+		var series = plot.selectAll('.series')
 			.data(seriesData)
 			.enter().append('g')
 			.attr('class', 'series');
@@ -143,7 +164,7 @@ function chart() {
 			.style("stroke", function (d) { return color(d.name); });
 
 		// To Do: Restore mouseover functionality in line chart.
-		//var focus = chart.append("g")
+		//var focus = plot.append("g")
 		//    .attr("class", "d3focus")
 		//    .style("display", "none");
 		//focus.append("circle")
@@ -152,7 +173,7 @@ function chart() {
 		//	.style({ 'font': '11px Lato' })
 		//    .attr("x", 9)
 		//    .attr("dy", ".35em");
-		//chart.append("rect")
+		//plot.append("rect")
 		//    .attr("class", "d3overlay")
 		//    .attr("width", calcWidth)
 		//    .attr("height", calcHeight)

@@ -35,3 +35,9 @@
   stroke: #5d85b8;
   stroke-width: 2.5px;
 }
+
+.d3chart-key {
+  text-anchor: left;
+  font-family: Lato;
+  font-size: 12px;
+}

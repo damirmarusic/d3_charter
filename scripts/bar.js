@@ -21,7 +21,6 @@ function chart() {
 	var yFormatter = d3.format(',');
 	var barFill = '#5d85b8';
 
-
 	function myBarChart(selection) {
 
 		var calcWidth = width - margin.left - margin.right, 
