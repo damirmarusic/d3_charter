@@ -75,7 +75,7 @@ class D3_Charter_Plugin {
 					.title('$params[title]')
 					.subtitle('$params[subtitle]')
 					.keyPosition('$params[keyposition]')
-					.xFormatter('$params[dateformatter]')
+					.xFormat('$params[dateformatter]')
 					.marginLeft(+$params[margin_left])
 					.width(+$params[chart_width])
 					.height(+$params[chart_height]);	
