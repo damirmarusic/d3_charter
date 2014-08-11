@@ -1,0 +1,28 @@
+<h2>D3 Charter - Simple D3.js-powered Charts in Wordpress</h2>
+
+<p>This Wordpress plugin allows easy embedding of simple D3.js charts using shortcodes. Copy the folder into your plugins directory and activate it.</p>
+
+<p>The shortcode interface in WordPress:</p>
+
+<pre><code>[d3chart title="Chart Title" 
+        subtitle="Chart Subtitle"
+        type="bar|barHoriz|line" 
+        margin_left="40"
+        chart_width="450"
+        chart_height="400"
+        data="data-filename.csv"
+        keyposition="top-right|top-left|bottom-right|bottom-left"
+        dateformatter="%-m/%-d/%y"]
+</code></pre>
+
+<p>The simplicity of the plugin relies on the data files being formatted to the plugin&rsquo;s specifications:</p>
+
+<ol>
+<li>The bar charts for now can only have one series. Line charts can have multiple data series. (Multiple series in bar charts coming soon.)</li>
+<li>The data must be in a comma separated file.</li>
+<li>For bar charts, the first row must have column headings and those headings must be x and y, in that order. See the <strong>data</strong> directory of this repository for examples. Obviously, these correspond to the x and y axes. Note that for horizontal bar charts, x and y are swapped.</li>
+<li>For line charts, the first row must have column headings, and the first column must be called &lsquo;Date&rsquo; and include the time series information. The subsequent columns can be called whatever you like, and they represent subsequent data series. Again, look at the examples in the <strong>data</strong> folder. The dates default to the mm/dd/yy format, but date parsing can be customized using the &lsquo;dateformatter&rsquo; shortcode attribute. See https://github.com/mbostock/d3/wiki/Time-Formatting for all the time formatting options available.</li>
+<li>For now, only line charts have keys. The key&rsquo;s position can be adjusted using the &lsquo;keyposition&rsquo; shortcode attribute.</li>
+<li>The data file needs to be uploaded into Wordpress&rsquo;s media library. Once uploaded, just make sure to enter the same filename into the &lsquo;data&rsquo; field in the shortcode. The plugin does the rest. <em>Note: if you re-upload new data for an old post, the link may break. The plugin relies on the post&rsquo;s publish date to keep the data in sync.</em></li>
+</ol>
+

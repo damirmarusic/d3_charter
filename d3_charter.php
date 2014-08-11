@@ -15,6 +15,7 @@ class D3_Charter_Plugin {
 		'title' => 'Title Placeholder',
 		'subtitle' => 'Subtitle Placeholder',
 		'keyposition' => 'bottom-right',
+		'dateformatter' => '%-m/%-d/%y',
 		'type' => 'bar',
 		'data' => '',
 		'margin_left' => '40',
@@ -74,6 +75,7 @@ class D3_Charter_Plugin {
 					.title('$params[title]')
 					.subtitle('$params[subtitle]')
 					.keyPosition('$params[keyposition]')
+					.xFormatter('$params[dateformatter]')
 					.marginLeft(+$params[margin_left])
 					.width(+$params[chart_width])
 					.height(+$params[chart_height]);	
