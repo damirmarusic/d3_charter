@@ -20,6 +20,9 @@ function chart() {
 		.scale(yScale)
 		.ticks(4)
 		.orient('left');
+	var keyPosition = 'bottom-left',
+		keyOffsetX,
+		keyOffsetY;
 	var title = 'Title Placeholder',
 		subtitle = 'Subtitle Placeholder';
 	var line = d3.svg.line()
@@ -88,24 +91,49 @@ function chart() {
 
 		});
 
+		switch (keyPosition) {
+			case 'bottom-right':
+				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight;
+				break;
+			case 'bottom-left':
+				keyOffsetX = (calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight;
+				break;
+			case 'top-right':
+				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight - (calcHeight/1.2);
+				break;
+			case 'top-left':
+				keyOffsetX = (calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight - (calcHeight/1.2);
+				break;
+			default:
+				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight;
+				break;
+		}
+
+		console.log(keyPosition);
+
 		var key = svg.append('g')
 			.attr('class', 'key');
 
 		var chartkey = key.append('text')
-			.attr('y', calcHeight)
+			.attr('y', keyOffsetY)
 			.attr('class', 'd3chart-key');
 
 		dataKeys.forEach(function(series, i){
 			key.append('rect')
-				.attr('y', calcHeight + (i * 15))
-				.attr('x', (3*(calcWidth + margin.left + margin.right)/4) - 15)
+				.attr('y', keyOffsetY + (i * 15))
+				.attr('x', keyOffsetX - 15)
 				.attr('height', 10)
 				.attr('width', 10)
 				.style('fill', color(series));
 
 			chartkey.append('tspan')
 				.attr('alignment-baseline', 'hanging')
-				.attr('x', 3*(calcWidth + margin.left + margin.right)/4)
+				.attr('x', keyOffsetX)
 				.attr('dy', i * 15)
 				.attr('class', series + '-key key')
 				.text(series);
@@ -244,6 +272,14 @@ function chart() {
 			return xFormatter;
 		}
 		xFormatter = d3.time.format(_).parse;
+		return myLineChart;
+	};
+
+	myLineChart.keyPosition = function(_) {
+		if (!arguments.length) {
+			return keyPosition;
+		}
+		keyPosition = _;
 		return myLineChart;
 	};
 

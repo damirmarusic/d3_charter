@@ -14,6 +14,7 @@ class D3_Charter_Plugin {
 	private $defaults = array(
 		'title' => 'Title Placeholder',
 		'subtitle' => 'Subtitle Placeholder',
+		'keyposition' => 'bottom-right',
 		'type' => 'bar',
 		'data' => '',
 		'margin_left' => '40',
@@ -72,6 +73,7 @@ class D3_Charter_Plugin {
 				var $chart_var = chart()
 					.title('$params[title]')
 					.subtitle('$params[subtitle]')
+					.keyPosition('$params[keyposition]')
 					.marginLeft(+$params[margin_left])
 					.width(+$params[chart_width])
 					.height(+$params[chart_height]);	
