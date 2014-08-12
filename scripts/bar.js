@@ -20,6 +20,9 @@ function chart() {
 		subtitle = 'Subtitle Placeholder';
 	var yFormatter = d3.format(',');
 	var barFill = '#5d85b8';
+	var keyPosition = 'bottom-left',
+		keyOffsetX,
+		keyOffsetY;
 
 	function myBarChart(selection) {
 
@@ -186,6 +189,14 @@ function chart() {
 			return yFormatter;
 		}
 		yFormatter = _;
+		return myBarChart;
+	};
+
+	myBarChart.keyPosition = function(_) {
+		if (!arguments.length) {
+			return keyPosition;
+		}
+		keyPosition = _;
 		return myBarChart;
 	};
 

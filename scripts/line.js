@@ -25,6 +25,7 @@ function chart() {
 		keyOffsetY;
 	var title = 'Title Placeholder',
 		subtitle = '';
+	var bisectX = d3.bisector(function(d) { return d.Date; }).left;
 	var line = d3.svg.line()
 		.defined(function(d) { return !isNaN(d.y); }) // Allow for discontinuous data
 		.x(function(d) { return xScale(d.x); })
@@ -210,13 +211,11 @@ function chart() {
 		//    .on("mouseout", function() { focus.style("display", "none"); })
 		//    .on("mousemove", mousemove);
 		//function mousemove() {
-		//  var x0 = xScale.invert(d3.mouse(this)[0]),
-		//      i = bisectX(data, x0, 1),
-		//      d0 = data[i - 1],
-		//      d1 = data[i],
-		//      d = x0 - d0.x > d1.x - x0 ? d1 : d0;
-		//  focus.attr("transform", "translate(" + xScale(d.x) + "," + yScale(d.y) + ")");
-		//  focus.select("text").text(yFormatter(d.y));
+		//	var x0 = xScale.invert(d3.mouse(this)[0]);
+		//	selection.each(function(data) {
+		//		var i = bisectX(data, x0, 1);
+		//		console.log(i);
+		//	});
 		//}
 	}
 
