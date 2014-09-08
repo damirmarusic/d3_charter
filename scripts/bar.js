@@ -18,11 +18,12 @@ function chart() {
 		.orient('left');
 	var title = 'Title Placeholder',
 		subtitle = 'Subtitle Placeholder';
-	var yFormatter = d3.format(',');
 	var barFill = '#5d85b8';
 	var keyPosition = 'bottom-left',
 		keyOffsetX,
-		keyOffsetY;
+		keyOffsetY,
+		dateFormatter,
+		yFormatter = d3.format(',');
 
 	function myBarChart(selection) {
 
@@ -31,12 +32,12 @@ function chart() {
 
 		var dataKeys;
 
-		var chart = selection.append('svg')
+		var plot = selection.append('svg')
 			.attr('class', 'cls-' + selection.attr('id'))
 			.attr('width', calcWidth + margin.left + margin.right)
 			.attr('height', calcHeight + margin.top + margin.bottom);
 
-		var titlearea = chart.append('text')
+		var titlearea = plot.append('text')
 			.attr('y', '1.2em');
 		
 		titlearea.append('tspan')
@@ -50,7 +51,7 @@ function chart() {
 			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(subtitle);
 		
-		chart = chart.append('g')
+		plot = plot.append('g')
 			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 		
 		selection.each(function(data) {
@@ -67,7 +68,7 @@ function chart() {
 
 			yAxis.tickFormat(yFormatter);
 
-			chart.append('g')
+			plot.append('g')
 				.attr('class', 'x axis')
 				.attr('transform', 'translate(0,' + calcHeight + ')')
 				.call(xAxis);
@@ -87,7 +88,7 @@ function chart() {
 				'shape-rendering': 'crispEdges'
 			});
 
-			chart.append('g')
+			plot.append('g')
 				.attr('class', 'y axis')
 				.call(yAxis);
 
@@ -105,7 +106,7 @@ function chart() {
 				'shape-rendering': 'crispEdges'
 			});
 
-			chart.selectAll('.bar')
+			plot.selectAll('.bar')
 				.data(data)
 				.enter().append('rect')
 				.attr('class', 'bar')
@@ -117,7 +118,7 @@ function chart() {
 				.on('mouseover', function(d){
 					var xPosition = parseFloat(d3.select(this).attr('x')) + xScale.rangeBand() / 2;
 					var yPosition = parseFloat(d3.select(this).attr('y')) + 14;
-					chart.append('text')
+					plot.append('text')
 						.attr('id', 'tooltip')
 						.attr('pointer-events', 'none')
 						.attr('x', xPosition)
@@ -184,11 +185,19 @@ function chart() {
 		return myBarChart;
 	};
 
+	myBarChart.dateFormat = function(_) {
+		if (!arguments.length) {
+			return dateFormatter;
+		}
+		dateFormatter = _;
+		return myBarChart;
+	};
+
 	myBarChart.yFormat = function(_) {
 		if (!arguments.length) {
 			return yFormatter;
 		}
-		yFormatter = _;
+		yFormatter = d3.format(_);
 		return myBarChart;
 	};
 

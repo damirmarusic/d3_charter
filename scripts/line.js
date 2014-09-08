@@ -25,7 +25,6 @@ function chart() {
 		keyOffsetY;
 	var title = 'Title Placeholder',
 		subtitle = '';
-	var bisectX = d3.bisector(function(d) { return d.Date; }).left;
 	var line = d3.svg.line()
 		.defined(function(d) { return !isNaN(d.y); }) // Allow for discontinuous data
 		.x(function(d) { return xScale(d.x); })
@@ -33,7 +32,9 @@ function chart() {
 	var xFormatter = d3.time.format('%-m/%-d/%y').parse;
 	var yFormatter = d3.format(',');
 	var color = d3.scale.ordinal()
-          .range(['#5d85b8','#D0021B','#D8D118','#616B31','#96DAD8']);
+    	.range(['#5d85b8','#D0021B','#D8D118','#616B31','#96DAD8']);
+    var xInter;
+    var bisector = d3.bisector(function(d){return d.x;}).left;
 
 	function myLineChart(selection) {
 
@@ -60,6 +61,36 @@ function chart() {
 			.attr('dy', '1.2em')
 			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(subtitle);
+
+		switch (keyPosition) {
+			case 'bottom-right':
+				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight - (calcHeight/16);
+				break;
+			case 'bottom-left':
+				keyOffsetX = (calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight - (calcHeight/16);
+				break;
+			case 'top-right':
+				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight - (calcHeight/1.3);
+				break;
+			case 'top-left':
+				keyOffsetX = (calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight - (calcHeight/1.3);
+				break;
+			default:
+				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
+				keyOffsetY = calcHeight - (calcHeight/16);
+				break;
+		}
+
+		var key = svg.append('g')
+			.attr('class', 'key');
+
+		var chartkey = key.append('text')
+			.attr('y', keyOffsetY - 15)
+			.attr('class', 'd3chart-key');
 		
 		selection.each(function(data) {
 
@@ -94,36 +125,6 @@ function chart() {
 				})]);
 
 		});
-
-		switch (keyPosition) {
-			case 'bottom-right':
-				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight - (calcHeight/16);
-				break;
-			case 'bottom-left':
-				keyOffsetX = (calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight - (calcHeight/16);
-				break;
-			case 'top-right':
-				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight - (calcHeight/1.3);
-				break;
-			case 'top-left':
-				keyOffsetX = (calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight - (calcHeight/1.3);
-				break;
-			default:
-				keyOffsetX = 3*(calcWidth + margin.left + margin.right)/4;
-				keyOffsetY = calcHeight - (calcHeight/16);
-				break;
-		}
-
-		var key = svg.append('g')
-			.attr('class', 'key');
-
-		var chartkey = key.append('text')
-			.attr('y', keyOffsetY - 15)
-			.attr('class', 'd3chart-key');
 
 		dataKeys.forEach(function(series, i){
 			key.append('rect')
@@ -193,30 +194,16 @@ function chart() {
 			.attr("d", function(d) { return line(d.values); })
 			.style("stroke", function (d) { return color(d.name); });
 
-		// To Do: Restore mouseover functionality in line chart.
-		//var focus = plot.append("g")
-		//    .attr("class", "d3focus")
-		//    .style("display", "none");
-		//focus.append("circle")
-		//    .attr("r", 3.5);
-		//focus.append("text")
-		//	.style({ 'font': '11px Lato' })
-		//    .attr("x", 9)
-		//    .attr("dy", ".35em");
-		//plot.append("rect")
-		//    .attr("class", "d3overlay")
-		//    .attr("width", calcWidth)
-		//    .attr("height", calcHeight)
-		//    .on("mouseover", function() { focus.style("display", null); })
-		//    .on("mouseout", function() { focus.style("display", "none"); })
-		//    .on("mousemove", mousemove);
-		//function mousemove() {
-		//	var x0 = xScale.invert(d3.mouse(this)[0]);
-		//	selection.each(function(data) {
-		//		var i = bisectX(data, x0, 1);
-		//		console.log(i);
-		//	});
-		//}
+		var focus = svg.append("g")
+			.attr("class", "focus")
+			.style("display", "none");
+
+		focus.append("circle")
+			.attr("r", 4.5);
+
+		focus.append("text")
+			.attr("x", 9)
+			.attr("dy", ".35em");
 	}
 
 	myLineChart.title = function(_) {
@@ -267,7 +254,7 @@ function chart() {
 		return myLineChart;
 	};
 
-	myLineChart.xFormat = function(_) {
+	myLineChart.dateFormat = function(_) {
 		if (!arguments.length) {
 			return xFormatter;
 		}

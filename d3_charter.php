@@ -16,6 +16,7 @@ class D3_Charter_Plugin {
 		'subtitle' => '',
 		'keyposition' => 'bottom-right',
 		'dateformatter' => '%-m/%-d/%y',
+		'yformatter' => ',',
 		'type' => 'bar',
 		'data' => '',
 		'margin_left' => '40',
@@ -58,7 +59,7 @@ class D3_Charter_Plugin {
 					$html .= '<script src="'.$plugindir.'scripts/barHoriz.min.js" charset="utf-8"></script>';
 					break;
 				case 'line':
-					$html .= '<script src="'.$plugindir.'scripts/line.min.js" charset="utf-8"></script>';
+					$html .= '<script src="'.$plugindir.'scripts/line.js" charset="utf-8"></script>';
 					break;
 				default:
 					$html .= '<script src="'.$plugindir.'scripts/bar.min.js" charset="utf-8"></script>';
@@ -75,7 +76,8 @@ class D3_Charter_Plugin {
 					.title('$params[title]')
 					.subtitle('$params[subtitle]')
 					.keyPosition('$params[keyposition]')
-					.xFormat('$params[dateformatter]')
+					.dateFormat('$params[dateformatter]')
+					.yFormat('$params[yformatter]')
 					.marginLeft(+$params[margin_left])
 					.width(+$params[chart_width])
 					.height(+$params[chart_height]);	

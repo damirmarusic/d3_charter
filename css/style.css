@@ -20,10 +20,12 @@
   font-style: italic;
 }
 
-.d3overlay {
+.d3overlay, .overlay {
   fill: none;
   pointer-events: all;
 }
+
+
 
 .d3focus circle {
   fill: none;

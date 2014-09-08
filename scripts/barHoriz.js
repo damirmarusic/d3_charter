@@ -18,6 +18,7 @@ function chart() {
 	var xFormatter = d3.format(',');
 	var barFill = '#5d85b8';
 	var keyPosition = 'bottom-left',
+		dateFormatter,
 		keyOffsetX,
 		keyOffsetY;
 
@@ -29,12 +30,12 @@ function chart() {
 
 		var dataKeys;
 
-		var chart = selection.append('svg')
+		var plot = selection.append('svg')
 			.attr('class', 'cls-' + selection.attr('id'))
 			.attr('width', calcWidth + margin.left + margin.right)
 			.attr('height', calcHeight + margin.top + margin.bottom);
 
-		var titlearea = chart.append('text')
+		var titlearea = plot.append('text')
 			.attr('y', '1.2em');
 		
 		titlearea.append('tspan')
@@ -48,12 +49,13 @@ function chart() {
 			.attr('x', (calcWidth + margin.left + margin.right)/2)
 			.text(subtitle);
 		
-		chart = chart.append('g')
+		plot = plot.append('g')
 			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 		
 		selection.each(function(data) {
 
 			dataKeys = d3.keys(data[0]);
+			console.log(dataKeys);
 
 			yScale
 				.rangeRoundBands([0, calcHeight], 0.1)
@@ -63,7 +65,7 @@ function chart() {
 				.range([0, calcWidth])
 				.domain([0, d3.max(data, function(d) { return +d[dataKeys[0]]; })]);
 
-			chart.append('g')
+			plot.append('g')
 				.attr('class', 'y axis')
 				.call(yAxis);
 
@@ -82,7 +84,7 @@ function chart() {
 				'shape-rendering': 'crispEdges'
 			});
 
-			chart.selectAll('.bar')
+			plot.selectAll('.bar')
 				.data(data)
 				.enter().append('rect')
 				.attr('class', 'bar')
@@ -94,13 +96,13 @@ function chart() {
 				.on('mouseover', function(d){
 					var yPosition = parseFloat(d3.select(this).attr('y')) + yScale.rangeBand() / 2;
 					var xPosition = parseFloat(d3.select(this).attr('x')) + d3.select(this).attr('width') - 14;
-					chart.append('text')
+					plot.append('text')
 						.attr('id', 'tooltip')
 						.attr('alignment-baseline', 'middle')
 						.attr('pointer-events', 'none')
 						.attr('x', xPosition)
 						.attr('y', yPosition)
-						.attr('text-anchor', 'middle')
+						.attr('text-anchor', 'end')
 						.attr('font-family', 'Lato')
 						.attr('font-size', '11px')
 						.attr('fill', 'black')
@@ -162,11 +164,19 @@ function chart() {
 		return myBarChart;
 	};
 
-	myBarChart.xFormat = function(_) {
+	myBarChart.dateFormat = function(_) {
+		if (!arguments.length) {
+			return dateFormatter;
+		}
+		dateFormatter = _;
+		return myBarChart;
+	};
+
+	myBarChart.yFormat = function(_) {
 		if (!arguments.length) {
 			return xFormatter;
 		}
-		xFormatter = _;
+		xFormatter = d3.format(_);
 		return myBarChart;
 	};
 
