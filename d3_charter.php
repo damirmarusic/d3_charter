@@ -16,12 +16,17 @@ class D3_Charter_Plugin {
 		'subtitle' => '',
 		'keyposition' => 'bottom-right',
 		'dateformatter' => '%-m/%-d/%y',
-		'yformatter' => ',',
+		'yformatter' => '',
+		'y_axis_label' => '',
+		'y_axis_label_position' => 'top',
+		'chart_credit' => '',
 		'type' => 'bar',
 		'data' => '',
 		'margin_left' => '40',
-		'chart_width' => '450',
-		'chart_height' => '400'
+		'margin_bottom' => '30',
+		'chart_width' => '400',
+		'chart_height' => '310',
+		'float' => False
 	);
 
 	function enable() {
@@ -46,8 +51,12 @@ class D3_Charter_Plugin {
 			$html = '<link rel="stylesheet" type="text/css" href="'.$plugindir.'css/style.css">';
 
 			// Create Divs and Include D3 script from Bostock.
-			$divname = uniqid('d3chart-'); // unique name for div			
-			$html .= '<div class="d3chart" id="'.$divname.'"></div>';
+			$divname = uniqid('d3chart-'); // unique name for div
+			if ($params['float'] == True) {
+				$html .= '<div style="width:'.$params['chart_width'].'px; float: right; padding: 0px 0px 10px 10px;" class="d3chart" id="'.$divname.'"></div>';
+			} else {
+				$html .= '<div style="width:'.$params['chart_width'].'px; margin: 0px auto;" class="d3chart" id="'.$divname.'"></div>';
+			}	
 			$html .= '<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>';
 
 			// Pick a chart type
@@ -73,12 +82,16 @@ class D3_Charter_Plugin {
 			$html .= <<<EOT
 			<script type="text/javascript">
 				var $chart_var = chart()
-					.title('$params[title]')
-					.subtitle('$params[subtitle]')
+					.title("$params[title]")
+					.subtitle("$params[subtitle]")
 					.keyPosition('$params[keyposition]')
 					.dateFormat('$params[dateformatter]')
 					.yFormat('$params[yformatter]')
 					.marginLeft(+$params[margin_left])
+					.marginBottom(+$params[margin_bottom])
+					.chartCredit('$params[chart_credit]')
+					.yAxisLabel('$params[y_axis_label]')
+					.yAxisLabelPosition('$params[y_axis_label_position]')
 					.width(+$params[chart_width])
 					.height(+$params[chart_height]);	
 				d3.csv('$datafile', function(error, data){

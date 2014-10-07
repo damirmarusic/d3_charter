@@ -1,40 +1,54 @@
-@import url(http://fonts.googleapis.com/css?family=Lato);
-
-.d3chart {
-  margin: 40px auto;
-}
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 
 .d3chart-title {
-  text-anchor: middle;
+  text-anchor: start;
   font-family: Lato;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
-  text-transform: uppercase;
+  fill: #CD223B;
 }
 
 .d3chart-subtitle {
-  fill: #888;
-  text-anchor: middle;
   font-family: Lato;
-  font-size: 16px;
-  font-style: italic;
+  font-weight: 700;
+  font-size: 13px;
+  display: block;
+  line-height: 1.2;
 }
 
-.d3overlay, .overlay {
+.overlay {
   fill: none;
   pointer-events: all;
 }
 
-
-
-.d3focus circle {
+.axis path,
+.axis line {
   fill: none;
-  stroke: red;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.focus circle {
+  fill: none;
+  stroke: #CD223B;
+}
+
+.axis, .focus, .d3credit {
+  font-size: 10px;
+  font-family: 'Lato', sans-serif;
+}
+
+.d3credit {
+  font-style: italic;
+  fill: #999;
 }
 
 .d3chart .line {
   fill: none;
-  stroke: #5d85b8;
   stroke-width: 2.5px;
 }
 

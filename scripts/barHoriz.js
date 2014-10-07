@@ -21,6 +21,9 @@ function chart() {
 		dateFormatter,
 		keyOffsetX,
 		keyOffsetY;
+	var chartCredit = '',
+		yAxisLabel = '',
+		yAxisLabelPosition = '';
 
 
 	function myBarChart(selection) {
@@ -55,7 +58,6 @@ function chart() {
 		selection.each(function(data) {
 
 			dataKeys = d3.keys(data[0]);
-			console.log(dataKeys);
 
 			yScale
 				.rangeRoundBands([0, calcHeight], 0.1)
@@ -164,6 +166,14 @@ function chart() {
 		return myBarChart;
 	};
 
+	myBarChart.marginBottom = function(_) {
+		if (!arguments.length) {
+			return margin.bottom;
+		}
+		margin.bottom = _;
+		return myBarChart;
+	};
+
 	myBarChart.dateFormat = function(_) {
 		if (!arguments.length) {
 			return dateFormatter;
@@ -185,6 +195,30 @@ function chart() {
 			return keyPosition;
 		}
 		keyPosition = _;
+		return myBarChart;
+	};
+
+	myBarChart.chartCredit = function(_) {
+		if (!arguments.length) {
+			return chartCredit;
+		}
+		chartCredit = _;
+		return myBarChart;
+	};
+
+	myBarChart.yAxisLabel = function(_) {
+		if (!arguments.length) {
+			return yAxisLabel;
+		}
+		yAxisLabel = _;
+		return myBarChart;
+	};
+
+	myBarChart.yAxisLabelPosition = function(_) {
+		if (!arguments.length) {
+			return yAxisLabelPosition;
+		}
+		yAxisLabelPosition = _;
 		return myBarChart;
 	};
 
